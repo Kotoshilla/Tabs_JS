@@ -37,9 +37,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //Timer
 
-     const deadline = '2022-9-15';
+    const deadline = '2022-9-15';
 
-     function getTimeRemaining(endtime) {
+    function getTimeRemaining(endtime) {
 
         let days, hours, minutes, seconds;
         const t = Date.parse(endtime) - Date.parse(new Date());
@@ -63,17 +63,17 @@ window.addEventListener('DOMContentLoaded', () => {
             'minutes': minutes,
             'seconds': seconds,
         };
-     }
+    }
 
-     function getZero(num) {
+    function getZero(num) {
         if(num >= 0 && num < 10) {
             return `0${num}`;
         } else {
             return num;
         }
-     }
+    }
 
-     function setClock(selector, endtime) {
+    function setClock(selector, endtime) {
         const timer = document.querySelector(selector);
         const days = timer.querySelector('#days');
         const hours = timer.querySelector('#hours');
@@ -95,10 +95,47 @@ window.addEventListener('DOMContentLoaded', () => {
                 clearInterval(timeInterval);  
             }
         }
-     }
+    }
 
-     setClock('.timer', deadline);
+    setClock('.timer', deadline);
 
+    //Modal
+
+    const modal = document.querySelector('.modal');
+    const modalBtns = document.querySelectorAll('[data-modal]');
+    const modalClose = document.querySelector('[data-close]');
+
+    function openModal() {
+        modalBtns.forEach((item) => {
+            item.addEventListener('click', () => {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+    }
+    
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (event) => {
+        if(event.target === modal) {
+            closeModal();
+        }
+    });
+    
+    document.addEventListener('keydown', (event) => {
+        if(event.code === 'Escape' && modal.style.display == 'block') {
+            closeModal();
+        }
+    });
+
+
+    openModal();
+    closeModal(); 
+    
 }); 
 
  
